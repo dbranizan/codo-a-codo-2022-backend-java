@@ -44,10 +44,9 @@ public class CreateController extends HttpServlet {
 				//cierre de conexion
 				con.close();
 				
-				//redireccionamos al listado
 				//getServletContext().getRequestDispatcher("/api/ListadoController").forward(req, resp);
-				resp.sendRedirect(req.getContextPath()+"/api/ListadoController");
 				
+				resp.sendRedirect(req.getContextPath()+"/api/ListadoController");
 			}catch (Exception e) {
 				e.printStackTrace();
 			}

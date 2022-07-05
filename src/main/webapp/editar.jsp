@@ -1,3 +1,4 @@
+<%@page import="ar.com.codoacodo.dto.Producto"%>
 <html>
 	<head>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -9,17 +10,24 @@
 			<%@include file="navbar.jsp" %>
 			<div class="container">
 				<section>
-					<h1>Alta</h1>
+					<% 
+					  	Producto producto = (Producto)request.getAttribute("producto");
+				  	%>
+					<h1>Editar producto ID=<%=producto.getIdProducto()%></h1>
 					<!--  JSP -->
-					<form method="post"
-						action="<%=request.getContextPath()%>/api/CreateController">
+					<form method="POST"
+						action="<%=request.getContextPath()%>/api/EditarController">
 						<div class="mb-3">
 						  <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-						  <input name="nombre"  type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nombre" maxlength="50">
+						  <input name="nombre"
+						  	value="<%=producto.getNombre()%>"  
+						  	type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nombre" maxlength="50">
 						</div>
 						<div class="mb-3">
 						  <label for="exampleFormControlTextarea1" class="form-label">Precio</label>
-						  <input name="precio" type="number" class="form-control" id="exampleFormControlTextarea1">
+						  <input name="precio"
+						  	value="<%=producto.getPrecio()%>" 
+						  	type="number" class="form-control" id="exampleFormControlTextarea1">
 						</div>
 						<div class="mb-3">
 						  <label for="exampleFormControlTextarea1" class="form-label">Im&aacute;gen</label>
@@ -27,10 +35,13 @@
 						</div>
 						<div class="mb-3">
 						  <label for="exampleFormControlTextarea1" class="form-label">C&oacute;digo</label>
-						  <input name="codigo" type="text" class="form-control" id="exampleFormControlTextarea1" maxlength="7">
+						  <input name="codigo"
+						  	readonly="readonly"
+						  	value="<%=producto.getCodigo()%>" 
+						  	type="text" class="form-control" id="exampleFormControlTextarea1" maxlength="7">
 						</div>
 						<button class="btn btn-primary">
-							Dar de alta
+							Grabar
 						</button>
 					</form>
 				</section>
