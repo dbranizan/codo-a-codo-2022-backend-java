@@ -13,25 +13,29 @@
 					<% 
 					  	Producto producto = (Producto)request.getAttribute("producto");
 				  	%>
-					<h1>Editar producto ID=<%=producto.getIdProducto()%></h1>
+					<h1>Consultar producto ID=<%=producto.getIdProducto()%></h1>
 					<!--  JSP -->
-					<form method="POST"
-						action="<%=request.getContextPath()%>/api/EditarController">
+					<form method="GET"
+						action="<%=request.getContextPath()%>/api/ConsultarController">
 						<div class="mb-3">
 						  <label for="exampleFormControlInput1" class="form-label">Nombre</label>
 						  <input name="nombre"
+						    readonly="readonly"
 						  	value="<%=producto.getNombre()%>"  
 						  	type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nombre" maxlength="50">
 						</div>
 						<div class="mb-3">
 						  <label for="exampleFormControlTextarea1" class="form-label">Precio</label>
 						  <input name="precio"
+						  	readonly="readonly"
 						  	value="<%=producto.getPrecio()%>" 
 						  	type="number" class="form-control" id="exampleFormControlTextarea1">
 						</div>
 						<div class="mb-3">
 						  <label for="exampleFormControlTextarea1" class="form-label">Im&aacute;gen</label>
-						  <input name="imagen" type="file" class="form-control" id="exampleFormControlTextarea1">
+						  <input name="imagen" 
+						  	readonly="readonly"
+						  	type="file" class="form-control" id="exampleFormControlTextarea1">
 						</div>
 						<div class="mb-3">
 						  <label for="exampleFormControlTextarea1" class="form-label">C&oacute;digo</label>
@@ -40,9 +44,7 @@
 						  	value="<%=producto.getCodigo()%>" 
 						  	type="text" class="form-control" id="exampleFormControlTextarea1" maxlength="7">
 						</div>
-						<button class="btn btn btn-success">
-							Grabar
-						</button>
+						<a class="btn btn-success" href="<%=request.getContextPath()%>/api/ListadoController" role="button">Volver</a>
 					</form>
 				</section>
 			</div>

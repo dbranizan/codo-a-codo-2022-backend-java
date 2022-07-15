@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.com.codoacodo.connection.AdministradorDeConexiones;
+import ar.com.codoacodo.daos.ProductoDAO;
 import ar.com.codoacodo.dto.Producto;
 
 @WebServlet("/api/ConsultarController")
@@ -22,44 +23,15 @@ public class ConsultarController extends HttpServlet {
 		
 		String id = req.getParameter("id");
 		
-		//validaciones!!!
+		ProductoDAO dao = new ProductoDAO();
 		
-		String sql = "SELECT * FROM PRODUCTO WHERE ID = " + id;
+		//invocamos al metodo para obtener el prod
+		Producto prodFromDb = dao.obtenerPorId(Long.parseLong(id));
 		
-		//conexion OK
-		Connection con = AdministradorDeConexiones.getConnection();
+		//guardar en el request el producto 
+		req.setAttribute("producto", prodFromDb);
 		
-		try {
-			//statement 
-			Statement st = con.createStatement();
-			
-			//resultset
-			ResultSet rs = st.executeQuery(sql);
-			
-			if(rs.next()) {//¿hay datos?
-				// rs > sacando los datos
-				Long idProducto = rs.getLong(1);//tomar la primer columna
-				String nombre = rs.getString(2);
-				Float precio = rs.getFloat(3);
-				Date fecha = rs.getDate(4);
-				String imagen = rs.getString(5);
-				String codigo = rs.getString(6);
-				
-				
-				//campos crear un objeto????
-				Producto prodFromDb = new Producto(idProducto,nombre,precio,fecha,imagen,codigo);
-				
-				//ir a otra pagina y ademas pasarle datos
-				
-				req.setAttribute("producto", prodFromDb);
-			}
-			//le indicamos que vaya a detalle.jsp con los datos de req
-			getServletContext().getRequestDispatcher("/detalle.jsp").forward(req, resp);
-			
-			//cierre de conexion
-			con.close();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		//le indicamos que vaya a detalle.jsp con los datos de req
+		getServletContext().getRequestDispatcher("/detalle.jsp").forward(req, resp);
 	}
 }
